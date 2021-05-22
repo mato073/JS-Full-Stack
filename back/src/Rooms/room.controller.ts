@@ -29,9 +29,4 @@ export class RoomController {
     async joinRoom(@Body('link') link: string, @Param('token') token: string) {
         return this.room.joinRooms(link, token);
     }
-
-    /* @Get(':email')
-     getUser(@Param('email') email: string) {
-         return this.oauthService.getUser(email);
-     }  */
 }
