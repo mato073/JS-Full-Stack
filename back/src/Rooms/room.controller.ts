@@ -15,18 +15,18 @@ export class RoomController {
         return this.room.getRooms();
     }
 
-    @Patch('start/:userId')
-    async StartRoom(@Body('link') link: string) {
-        
+    @Patch('start/:token')
+    async StartRoom(@Body('link') link: string, @Param('token') token: string) {
+        return this.room.StartRooms(link, token)
     }
 
-    @Patch('stop/:userId')
-    async StopRoom(@Body('link') link: string) {
-        
+    @Patch('stop/:token')
+    async StopRoom(@Body('link') link: string, @Param('token') token: string) {
+        return this.room.StopRooms(link, token);
     }
 
     @Patch('join/:token')
-    async  joinRoom(@Body('link') link: string,  @Param('token') token: string) {
+    async joinRoom(@Body('link') link: string, @Param('token') token: string) {
         return this.room.joinRooms(link, token);
     }
 

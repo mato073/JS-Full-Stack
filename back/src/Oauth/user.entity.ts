@@ -14,6 +14,6 @@ export class Users {
     @Column()
     email: string;
 
-    @Column({ default: null })
+    @Column({ default: null, type:"longtext" })
     room: string;
 }

@@ -19,59 +19,66 @@ export class RoomService {
         return this.roomsRepository.find();
     }
 
-    async StartRooms(userid, link) {
-        const rooms = await this.roomsRepository.find(userid);
-        if (!rooms) {
+    async StartRooms(link: string, token: string) {
+        const id = await this.getIdFromToken(token);
+        const room = await this.roomsRepository.findOne({ link });
+        if (!room) {
             throw new NotFoundException('No rooms found')
         }
-        const room = rooms.find(link);
-        if (!room) {
-            throw new NotFoundException('No room found')
-        }
+        const param = JSON.parse(room.creator);
+        if (param[0].id !== id)
+            throw new NotFoundException('The user dos not own the room')
         if (room.status === 'offline') {
-            //patch the status
+            room.status = 'online'
+            await this.roomsRepository.save(room);
+            return ({message: 'the game start', status: 200})
         } else {
             throw new NotFoundException('the room is alrady started')
         }
     }
 
-    async StopRooms(userid, link) {
-        const rooms = await this.roomsRepository.find(userid);
-        if (!rooms) {
+    async StopRooms(link: string, token: string) {
+        const id = await this.getIdFromToken(token);
+        const room = await this.roomsRepository.findOne({ link });
+        if (!room) {
             throw new NotFoundException('No rooms found')
         }
-        const room = rooms.find(link);
-        if (!room) {
-            throw new NotFoundException('No room found')
-        }
+        const param = JSON.parse(room.creator);
+        if (param[0].id != id)
+            throw new NotFoundException('The user dos not own the room')
         if (room.status === 'online') {
-            //patch the status
+            room.status = 'offline'
+            await this.roomsRepository.save(room);
+            return ({message: 'the game stop', status: 200})
         } else {
-            throw new NotFoundException('the room is alrady stoped')
+            throw new NotFoundException('the room is alrady started')
         }
     }
 
     async joinRooms(link, token) {
         const id = await this.getIdFromToken(token);
-        const user = await this.usersRepository.findOne({id});
-        const room = await this.roomsRepository.findOne({link});
+        const user = await this.usersRepository.findOne({ id });
+        const room = await this.roomsRepository.findOne({ link });
         if (!room || !user) {
             throw new NotFoundException('The link is invalid ! or no room exist')
-        }/*  else if (room.status === 'offline') {
+        } else if (room.status === 'offline') {
             throw new NotFoundException('The room is currently offline')
-        } */
+        }
+
         const playes = JSON.parse(room.players);
+        if (playes.lenthe === 6)
+            throw new NotFoundException('The room is full')
         playes.push(user);
         room.players = JSON.stringify(playes);
         await this.roomsRepository.save(room);
-        return( 'Player add to the gaem')
+        return ('Player add to the gaem')
     }
 
     async postRoom(name: string, token: string,) {
         const id = await this.getIdFromToken(token);
         const link = uuidv4();
         const date = new Date();
-        const user = await this.usersRepository.findOne({id});
+        const user = await this.usersRepository.findOne({ id });
         const player = []
         player.push(user);
         const room = new Room(name, link, date, JSON.stringify([user]), JSON.stringify(player));
