@@ -1,4 +1,6 @@
 import {Users} from './src/Oauth/user.entity'
+import {Rooms} from './src/Rooms/room.entity'
+
 const config = {
     "type": "mysql",
     "host": "localhost",
@@ -6,7 +8,7 @@ const config = {
     "username": "root",
     "password": "",
     "database": "jsfullstack",
-    "entities": [Users],
+    "entities": [Users, Rooms],
     "synchronize": true
 }
 

@@ -8,13 +8,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
 import {UserModule} from './Oauth/user.module'
+import {RoomModule} from './Rooms/room.module'
 import config from '../ormconfig'
 
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
-    UserModule
+    UserModule,
+    RoomModule
   ],
   controllers: [
     AppController,
