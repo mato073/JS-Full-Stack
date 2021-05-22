@@ -15,8 +15,8 @@ export class UserController {
         return await this.oauthService.login(email, password);
     }
 
-    @Get(':email')
-    getUser(@Param('email') email: string) {
-        return this.oauthService.getUser(email);
+    @Get(':token')
+    async getUser(@Param('token') token: string) {
+        return await this.oauthService.getUser(token);
     }
 }

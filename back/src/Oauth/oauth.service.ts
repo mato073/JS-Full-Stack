@@ -37,8 +37,14 @@ export class OauthService {
         return ("User have bean created");
     }
 
-    getUser(email: string) {
-        return this.usersRepository.find();
+    async getUser(token: string) {
+        const id = await this.getIdFromToken(token);
+        return this.usersRepository.findOne({id});
     }
+
+    async getIdFromToken(token: string) {
+        const { id } =  await this.jwtService.verifyAsync(token);
+        return id;
+    } 
 }
 
