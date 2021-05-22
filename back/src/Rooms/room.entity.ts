@@ -16,4 +16,10 @@ export class Rooms {
 
     @Column()
     date: Date;
+
+    @Column()
+    creator: string;
+    
+    @Column({ default: null, type:"longtext"})
+    players: string;
 }

@@ -5,9 +5,9 @@ import { RoomService } from './room.service';
 export class RoomController {
     constructor(private readonly room: RoomService) { }
 
-    @Post()
-    addRoom(@Body('name') name: string) {
-        return this.room.postRoom(name);
+    @Post(':token')
+    addRoom(@Body('name') name: string, @Param('token') token: string) {
+        return this.room.postRoom(name, token);
     }
 
     @Get('rooms')
@@ -25,9 +25,9 @@ export class RoomController {
         
     }
 
-    @Patch('connect/:userId')
-    connectRoom(@Body('link') link: string) {
-
+    @Patch('join/:token')
+    async  joinRoom(@Body('link') link: string,  @Param('token') token: string) {
+        return this.room.joinRooms(link, token);
     }
 
     /* @Get(':email')

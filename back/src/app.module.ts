@@ -12,11 +12,12 @@ import {RoomModule} from './Rooms/room.module'
 import config from '../ormconfig'
 
 
+
 @Module({
   imports: [
     TypeOrmModule.forRoot(config),
     UserModule,
-    RoomModule
+    RoomModule,
   ],
   controllers: [
     AppController,

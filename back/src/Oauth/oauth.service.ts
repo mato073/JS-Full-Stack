@@ -39,6 +39,8 @@ export class OauthService {
 
     async getUser(token: string) {
         const id = await this.getIdFromToken(token);
+        console.log('id', id);
+        
         return this.usersRepository.findOne({id});
     }
 

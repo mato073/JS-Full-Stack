@@ -13,4 +13,7 @@ export class Users {
 
     @Column()
     email: string;
+
+    @Column({ default: null })
+    room: string;
 }
