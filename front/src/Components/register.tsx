@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Register = () => {
+const Register: React.FC = () => {
     const classes = useStyles();
 
     return (
