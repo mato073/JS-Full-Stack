@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from '../Components/login'
 import Register from '../Components/register'
-import Home from '../Components/home'
+import Home from '../Components/Home/home'
 import Game from '../Components/game'
 
 const Router: React.FC = () => {
