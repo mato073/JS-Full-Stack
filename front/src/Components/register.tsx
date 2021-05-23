@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { Link } from 'react-router-dom';
+import { register } from '../Services/connection'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,8 +28,47 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Register: React.FC = () => {
+interface Props {
+    history: {
+      push(url: string): void;
+    };
+  }
+
+const Register: React.FC<Props> = (props) => {
     const classes = useStyles();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confPassword, setConfPassword] = useState("");
+    const [name, setName] = useState("");
+
+    const { history } = props;
+
+    const hand_email = (e: any) => {
+        setEmail(e.target.value)
+    }
+    const hand_password = (e: any) => {
+        setPassword(e.target.value)
+    }
+    const hand_confPassword = (e: any) => {
+        setConfPassword(e.target.value)
+    }
+    const hand_name = (e: any) => {
+        setName(e.target.value)
+    }
+
+    const register_user = async () => {
+        console.log('user =', name, email, password, confPassword);
+        if (name === "" || password != confPassword || email === "") {
+            console.log('error');
+            return;
+        }
+        const result = await register(name, email, password);
+        if (result === true) {
+            history.push('/login')
+        } else {
+            console.log('error');
+        }
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -37,7 +77,7 @@ const Register: React.FC = () => {
                 <Typography component="h1" variant="h5">
                     Register
         </Typography>
-                <form className={classes.form} noValidate>
+                <div className={classes.form}>
                     <TextField
                         variant="outlined"
                         margin="normal"
@@ -46,6 +86,7 @@ const Register: React.FC = () => {
                         id="name"
                         label="Name"
                         name="name"
+                        onChange={hand_name}
                     />
                     <TextField
                         variant="outlined"
@@ -56,6 +97,7 @@ const Register: React.FC = () => {
                         label="Email Address"
                         name="email"
                         autoComplete="email"
+                        onChange={hand_email}
                     />
                     <TextField
                         variant="outlined"
@@ -67,6 +109,7 @@ const Register: React.FC = () => {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        onChange={hand_password}
                     />
                     <TextField
                         variant="outlined"
@@ -78,6 +121,7 @@ const Register: React.FC = () => {
                         type="password"
                         id="confirme-password"
                         autoComplete="current-password"
+                        onChange={hand_confPassword}
                     />
                     <Button
                         type="submit"
@@ -85,6 +129,7 @@ const Register: React.FC = () => {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={() => register_user()}
                     >
                         Sign In
           </Button>
@@ -98,7 +143,7 @@ const Register: React.FC = () => {
                         > Login
             </Button>
                     </Link>
-                </form>
+                </div>
             </div>
         </Container>
     );
