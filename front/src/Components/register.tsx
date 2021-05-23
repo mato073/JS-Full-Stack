@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -87,6 +88,16 @@ const Register: React.FC = () => {
                     >
                         Sign In
           </Button>
+                    <Link to="/login">
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                        > Login
+            </Button>
+                    </Link>
                 </form>
             </div>
         </Container>

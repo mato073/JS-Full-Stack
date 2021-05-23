@@ -12,6 +12,7 @@ export class UserController {
 
     @Post('login')
     async login(@Body('email') email: string, @Body('password') password: string) {
+        
         return await this.oauthService.login(email, password);
     }
 
