@@ -1,42 +1,19 @@
 import React from 'react'
-import axios from 'axios'
 
-const Board: React.FC = () => {
-    const [selectedPice, setSelectedPice] = React.useState("");
-    const [viole, setViole] = React.useState<any | null>(null);;
-    const [posVAlue, setPostValu] = React.useState(Number);
+interface Props {
+    serverPosition: any,
+    changePosition: any,
+    position: any,
+}
 
-
-    React.useEffect(() => {
-        const getData = async () => {
-            const data = await axios.get('http://localhost:8080/room/possition');
-            setViole(data.data);
-        }
-        getData()
-    }, [])
-
-    const changePosition = (e: any, key: number) => {
-        if (selectedPice !== "") {
-            let newTab = viole;
-            const Temp = newTab.Purple[posVAlue].position
-            newTab.Purple[posVAlue].position = e.target.getAttribute('transform');
-            newTab.White[key].position = Temp;
-            setViole(newTab);
-            setSelectedPice("");
-        }
-    }
-
-    const position = (e: any, key: number) => {
-        setSelectedPice(e.target.id);
-        setPostValu(key);
-    }
+const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => {
 
     const purple = () => {
 
-        if (viole !== null) {
-            return viole.Purple.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Purple.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#PurpleBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#PurpleBall" onClick={(e) => position(e, key, 'Purple')} ></use>
                 )
             })
         }
@@ -44,40 +21,40 @@ const Board: React.FC = () => {
 
     const red = () => {
 
-        if (viole !== null) {
-            return viole.Red.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Red.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#RedBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#RedBall" onClick={(e) => position(e, key, 'Red')} ></use>
                 )
             })
         }
     }
     const orange = () => {
 
-        if (viole !== null) {
-            return viole.Orange.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Orange.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#OrangeBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#OrangeBall" onClick={(e) => position(e, key, 'Orange')} ></use>
                 )
             })
         }
     }
     const yellow = () => {
 
-        if (viole !== null) {
-            return viole.Yellow.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Yellow.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#YellowBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#YellowBall" onClick={(e) => position(e, key, 'Yellow')} ></use>
                 )
             })
         }
     }
     const green = () => {
 
-        if (viole !== null) {
-            return viole.Green.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Green.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#GreenBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#GreenBall" onClick={(e) => position(e, key, 'Green')} ></use>
                 )
             })
         }
@@ -86,10 +63,10 @@ const Board: React.FC = () => {
 
     const blue = () => {
 
-        if (viole !== null) {
-            return viole.Blue.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.Blue.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#BlueBall" onClick={(e) => position(e, key)} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#BlueBall" onClick={(e) => position(e, key, 'Blue')} ></use>
                 )
             })
         }
@@ -97,8 +74,8 @@ const Board: React.FC = () => {
 
     const white = () => {
 
-        if (viole !== null) {
-            return viole.White.map((item: any, key: any) => {
+        if (serverPosition !== null) {
+            return serverPosition.White.map((item: any, key: any) => {
                 return (
                     <use key={key} transform={item.position} xlinkHref="#WhiteHole" onClick={(e) => changePosition(e, key)} ></use>
                 )
