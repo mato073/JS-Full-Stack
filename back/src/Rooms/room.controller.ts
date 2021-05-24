@@ -14,6 +14,10 @@ export class RoomController {
     getRooms() {
         return this.room.getRooms();
     }
+    @Get('possition')
+    getPossition() {
+        return this.room.getPosition();
+    }
 
     @Patch('start/:token')
     async StartRoom(@Body('link') link: string, @Param('token') token: string) {

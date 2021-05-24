@@ -58,7 +58,7 @@ const Register: React.FC<Props> = (props) => {
 
     const register_user = async () => {
         console.log('user =', name, email, password, confPassword);
-        if (name === "" || password != confPassword || email === "") {
+        if (name === "" || password !== confPassword || email === "") {
             console.log('error');
             return;
         }

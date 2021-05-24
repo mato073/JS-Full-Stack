@@ -1,0 +1,500 @@
+{
+    "Purple": [
+        {
+            "id": "Purple1",
+            "position": "translate(389 628.172)"
+        },
+        {
+            "id": "Purple2",
+            "position": "translate(370.5 596.129)"
+        },
+        {
+            "id": "Purple3",
+            "position": "translate(352 564.086)"
+        },
+        {
+            "id": "Purple4",
+            "position": "translate(333.5 532.043)"
+        },
+        {
+            "id": "Purple5",
+            "position": "translate(352 628.172)"
+        },
+        {
+            "id": "Purple6",
+            "position": "translate(333.5 596.129)"
+        },
+        {
+            "id": "Purple7",
+            "position": "translate(315 564.086)"
+        },
+        {
+            "id": "Purple8",
+            "position": "translate(315 628.172)"
+        },
+        {
+            "id": "Purple9",
+            "position": "translate(296.5 596.129)"
+        },
+        {
+            "id": "Purple10",
+            "position": "translate(278 628.172)"
+        }
+    ],
+    "Red": [
+        {
+            "id": "Red1",
+            "position": "translate(555.5 660.215)"
+        },
+        {
+            "id": "Red2",
+            "position": "translate(518.5 660.215)"
+        },
+        {
+            "id": "Red3",
+            "position": "translate(481.5 660.215)"
+        },
+        {
+            "id": "Re4",
+            "position": "translate(444.5 660.215)"
+        },
+        {
+            "id": "Red5",
+            "position": "translate(537 692.258)"
+        },
+        {
+            "id": "Red6",
+            "position": "translate(500 692.258)"
+        },
+        {
+            "id": "Red7",
+            "position": "translate(463 692.258)"
+        },
+        {
+            "id": "Red8",
+            "position": "translate(518.5 724.3)"
+        },
+        {
+            "id": "Red19",
+            "position": "translate(481.5 724.3)"
+        },
+        {
+            "id": "Red10",
+            "position": "translate(500 756.344)"
+        }
+    ],
+    "Orange": [
+        {
+            "id": "Orange1",
+            "position": "translate(666.5 532.043)"
+        },
+        {
+            "id": "Orange2",
+            "position": "translate(648 564.086)"
+        },
+        {
+            "id": "Orange3",
+            "position": "translate(629.5 596.129)"
+        },
+        {
+            "id": "Orange4",
+            "position": "translate(611 628.172)"
+        },
+        {
+            "id": "Orange5",
+            "position": "translate(685 564.086)"
+        },
+        {
+            "id": "Orange6",
+            "position": "translate(666.5 596.129)"
+        },
+        {
+            "id": "Orange7",
+            "position": "translate(648 628.172)"
+        },
+        {
+            "id": "Orange8",
+            "position": "translate(703.5 596.129)"
+        },
+        {
+            "id": "Orange9",
+            "position": "translate(685 628.172)"
+        },
+        {
+            "id": "Orange10",
+            "position": "translate(722 628.172)"
+        }
+    ],
+    "Yellow": [
+        {
+            "id": "Yellow1",
+            "position": "translate(611 371.828)"
+        },
+        {
+            "id": "Yellow2",
+            "position": "translate(629.5 403.871)"
+        },
+        {
+            "id": "Yellow3",
+            "position": "translate(648 435.914)"
+        },
+        {
+            "id": "Yellow4",
+            "position": "translate(666.5 467.957)"
+        },
+        {
+            "id": "Yellow5",
+            "position": "translate(648 371.828)"
+        },
+        {
+            "id": "Yellow6",
+            "position": "translate(666.5 403.871)"
+        },
+        {
+            "id": "Yellow7",
+            "position": "translate(685 435.914)"
+        },
+        {
+            "id": "Yellow8",
+            "position": "translate(685 371.828)"
+        },
+        {
+            "id": "Yellow9",
+            "position": "translate(703.5 403.871)"
+        },
+        {
+            "id": "Yellow10",
+            "position": "translate(722 371.828)"
+        }
+    ],
+    "Green": [
+        {
+            "id": "Green1",
+            "position": "translate(444.5 339.785)"
+        },
+        {
+            "id": "Green2",
+            "position": "translate(481.5 339.785)"
+        },
+        {
+            "id": "Green3",
+            "position": "translate(518.5 339.785)"
+        },
+        {
+            "id": "Green4",
+            "position": "translate(555.5 339.785)"
+        },
+        {
+            "id": "Green5",
+            "position": "translate(463 307.742)"
+        },
+        {
+            "id": "Green6",
+            "position": "translate(500 307.742)"
+        },
+        {
+            "id": "Green7",
+            "position": "translate(537 307.742)"
+        },
+        {
+            "id": "Green8",
+            "position": "translate(481.5 275.7)"
+        },
+        {
+            "id": "Green9",
+            "position": "translate(518.5 276.47)"
+        },
+        {
+            "id": "Green10",
+            "position": "translate(500 243.656)"
+        }
+    ],
+    "Blue": [
+        {
+            "id": "Red1",
+            "position": "translate(333.5 467.957)"
+        },
+        {
+            "id": "Red2",
+            "position": "translate(352 435.914)"
+        },
+        {
+            "id": "Red3",
+            "position": "translate(370.5 403.871)"
+        },
+        {
+            "id": "Re4",
+            "position": "translate(389 371.828)"
+        },
+        {
+            "id": "Red5",
+            "position": "translate(315 435.914)"
+        },
+        {
+            "id": "Red6",
+            "position": "translate(333.5 403.871)"
+        },
+        {
+            "id": "Red7",
+            "position": "translate(352 371.828)"
+        },
+        {
+            "id": "Red8",
+            "position": "translate(296.5 403.871)"
+        },
+        {
+            "id": "Red19",
+            "position": "translate(315 371.828)"
+        },
+        {
+            "id": "Red10",
+            "position": "translate(278 371.828)"
+        }
+    ],
+    "White": [
+        {
+            "position": "translate(352 500)",
+            "id": "White1"
+        },
+        {
+            "position": "translate(389 500)",
+            "id": "White2"
+        },
+        {
+            "position": "translate(426 500)",
+            "id": "White3"
+        },
+        {
+            "position": "translate(463 500)",
+            "id": "White4"
+        },
+        {
+            "position": "translate(500 500)",
+            "id": "White5"
+        },
+        {
+            "position": "translate(537 500)",
+            "id": "White6"
+        },
+        {
+            "position": "translate(574 500)",
+            "id": "White7"
+        },
+        {
+            "position": "translate(611 500)",
+            "id": "White8"
+        },
+        {
+            "position": "translate(648 500)",
+            "id": "White9"
+        },
+        {
+            "position": "translate(370.5 467.957)",
+            "id": "White10"
+        },
+        {
+            "position": "translate(407.5 467.957)",
+            "id": "White11"
+        },
+        {
+            "position": "translate(444.5 467.957)",
+            "id": "White12"
+        },
+        {
+            "position": "translate(481.5 467.957)",
+            "id": "White13"
+        },
+        {
+            "position": "translate(518.5 467.957)",
+            "id": "White14"
+        },
+        {
+            "position": "translate(555.5 467.957)",
+            "id": "White15"
+        },
+        {
+            "position": "translate(592.5 467.957)",
+            "id": "White16"
+        },
+        {
+            "position": "translate(629.5 467.957)",
+            "id": "White17"
+        },
+        {
+            "position": "translate(389 435.914)",
+            "id": "White18"
+        },
+        {
+            "position": "translate(426 435.914)",
+            "id": "White19"
+        },
+        {
+            "position": "translate(463 435.914)",
+            "id": "White20"
+        },
+        {
+            "position": "translate(500 435.914)",
+            "id": "White21"
+        },
+        {
+            "position": "translate(537 435.914)",
+            "id": "White22"
+        },
+        {
+            "position": "translate(574 435.914)",
+            "id": "White23"
+        },
+        {
+            "position": "translate(611 435.914)",
+            "id": "White24"
+        },
+        {
+            "position": "translate(407.5 403.871)",
+            "id": "White25"
+        },
+        {
+            "position": "translate(444.5 403.871)",
+            "id": "White26"
+        },
+        {
+            "position": "translate(481.5 403.871)",
+            "id": "White27"
+        },
+        {
+            "position": "translate(518.5 403.871)",
+            "id": "White28"
+        },
+        {
+            "position": "translate(555.5 403.871)",
+            "id": "White29"
+        },
+        {
+            "position": "translate(592.5 403.871)",
+            "id": "White30"
+        },
+        {
+            "position": "translate(426 371.828)",
+            "id": "White31"
+        },
+        {
+            "position": "translate(463 371.828)",
+            "id": "White32"
+        },
+        {
+            "position": "translate(500 371.828)",
+            "id": "White33"
+        },
+        {
+            "position": "translate(537 371.828)",
+            "id": "White34"
+        },
+        {
+            "position": "translate(574 371.828)",
+            "id": "White35"
+        },
+        {
+            "position": "translate(370.5 532.043)",
+            "id": "White36"
+        },
+        {
+            "position": "translate(407.5 532.043)",
+            "id": "White37"
+        },
+        {
+            "position": "translate(444.5 532.043)",
+            "id": "White38"
+        },
+        {
+            "position": "translate(481.5 532.043)",
+            "id": "White39"
+        },
+        {
+            "position": "translate(518.5 532.043)",
+            "id": "White40"
+        },
+        {
+            "position": "translate(555.5 532.043)",
+            "id": "White41"
+        },
+        {
+            "position": "translate(592.5 532.043)",
+            "id": "White42"
+        },
+        {
+            "position": "translate(629.5 532.043)",
+            "id": "White43"
+        },
+        {
+            "position": "translate(389 564.086)",
+            "id": "White44"
+        },
+        {
+            "position": "translate(426 564.086)",
+            "id": "White45"
+        },
+        {
+            "position": "translate(463 564.086)",
+            "id": "White46"
+        },
+        {
+            "position": "translate(500 564.086)",
+            "id": "White47"
+        },
+        {
+            "position": "translate(537 564.086)",
+            "id": "White48"
+        },
+        {
+            "position": "translate(574 564.086)",
+            "id": "White49"
+        },
+        {
+            "position": "translate(611 564.086)",
+            "id": "White50"
+        },
+        {
+            "position": "translate(407.5 596.129)",
+            "id": "White51"
+        },
+        {
+            "position": "translate(444.5 596.129)",
+            "id": "White52"
+        },
+        {
+            "position": "translate(481.5 596.129)",
+            "id": "White53"
+        },
+        {
+            "position": "translate(518.5 596.129)",
+            "id": "White54"
+        },
+        {
+            "position": "translate(555.5 596.129)",
+            "id": "White55"
+        },
+        {
+            "position": "translate(592.5 596.129)",
+            "id": "White56"
+        },
+        {
+            "position": "translate(426 628.172)",
+            "id": "White57"
+        },
+        {
+            "position": "translate(463 628.172)",
+            "id": "White58"
+        },
+        {
+            "position": "translate(500 628.172)",
+            "id": "White59"
+        },
+        {
+            "position": "translate(537 628.172)",
+            "id": "White60"
+        },
+        {
+            "position": "translate(574 628.172)",
+            "id": "White61"
+        }
+    ]
+}

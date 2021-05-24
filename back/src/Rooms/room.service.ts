@@ -6,6 +6,7 @@ import { Rooms } from './room.entity'
 import { JwtService } from '@nestjs/jwt';
 import { Users } from '../Oauth/user.entity'
 import { v4 as uuidv4 } from 'uuid';
+const position = require('./position.json')
 
 @Injectable()
 export class RoomService {
@@ -31,7 +32,7 @@ export class RoomService {
         if (room.status === 'offline') {
             room.status = 'online'
             await this.roomsRepository.save(room);
-            return ({message: 'the game start', status: 200})
+            return ({ message: 'the game start', status: 200 })
         } else {
             throw new NotFoundException('the room is alrady started')
         }
@@ -49,12 +50,15 @@ export class RoomService {
         if (room.status === 'online') {
             room.status = 'offline'
             await this.roomsRepository.save(room);
-            return ({message: 'the game stop', status: 200})
+            return ({ message: 'the game stop', status: 200 })
         } else {
             throw new NotFoundException('the room is alrady started')
         }
     }
 
+    getPosition() {
+        return position
+    }
     async joinRooms(link, token) {
         const id = await this.getIdFromToken(token);
         const user = await this.usersRepository.findOne({ id });
