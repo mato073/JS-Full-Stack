@@ -7,21 +7,33 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import SportsEsports from '@material-ui/icons/SportsEsports';
 import Divider from '@material-ui/core/Divider';
+import { Button } from '@material-ui/core/'
+import { link } from 'fs';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        display: 'flex'
+        width: '20%',
+        display: 'flex',
+        flexDirection: 'column'
     },
 }));
 
 interface Props {
-    rooms: any;
+    rooms: any,
+    history: {
+        push(url: string): void;
+    };
 }
 
 const ListsRooms: React.FC<Props> = (props) => {
-    const rooms = props.rooms;
+    const { rooms, history } = props;
 
     const classes = useStyles();
+
+    const goToGame = (link: string) => {
+        localStorage.setItem('link', link);
+        history.push('/game')
+    }
 
     const Elements = () => {
         if (rooms === null) {
@@ -32,6 +44,8 @@ const ListsRooms: React.FC<Props> = (props) => {
             )
         } else {
             return rooms.map((item: any, key: number) => {
+                console.log(item);
+
                 return (
                     <div key={key}>
                         <ListItem>
@@ -42,6 +56,14 @@ const ListsRooms: React.FC<Props> = (props) => {
                             </ListItemAvatar>
                             <ListItemText primary={item.name} secondary={item.status} />
                         </ListItem>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => goToGame(item.link)}
+                        > Join
+                         </Button>
                         < Divider />
                     </div>
                 )

@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
         width: drawerWidth,
     },
     list: {
+        marginTop: 40,
         display: 'flex',
         justifyContent: 'center'
 
@@ -97,17 +98,16 @@ const Home: React.FC<Props> = (props) => {
             </Drawer>
             <main className={classes.content}>
                 <div>
-                    <AppBar position="static">
+                    <AppBar>
                         <Toolbar>
                             <Typography variant="h6" className={classes.title}>
                                 Rooms
                         </Typography>
-                            <Button color="inherit">Login</Button>
                         </Toolbar>
                     </AppBar>
                 </div>
                 <div className={classes.list}>
-                    <ListsRooms rooms={rooms} />
+                    <ListsRooms history={history} rooms={rooms} />
                 </div>
             </main>
         </div>
