@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAllRooms } from '../../Services/rooms'
+import ModalView from './Components/modalNewRoom'
 
 import ListsRooms from './Components/listsRooms'
 
@@ -31,9 +32,22 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
 }));
-const Home: React.FC = () => {
+
+interface Props {
+    history: {
+        push(url: string): void;
+    };
+}
+
+const Home: React.FC<Props> = (props) => {
     const classes = useStyles();
     const [rooms, setRooms] = useState(null);
+    const [open, setOpen] = useState(false);
+    const { history } = props;
+
+    const handle = () => {
+        setOpen(!open);
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -46,6 +60,7 @@ const Home: React.FC = () => {
 
     return (
         <div className={classes.root}>
+            <ModalView open={open} history={history} handle={() => handle()} />
             <Drawer
                 className={classes.drawer}
                 variant="permanent"
@@ -70,6 +85,7 @@ const Home: React.FC = () => {
                     </Box>
                     <Box p={1} bgcolor="#1a237e">
                         <Button
+                            onClick={() => handle()}
                             type="submit"
                             fullWidth
                             variant="contained"

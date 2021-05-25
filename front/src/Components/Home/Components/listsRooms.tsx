@@ -33,7 +33,7 @@ const ListsRooms: React.FC<Props> = (props) => {
         } else {
             return rooms.map((item: any, key: number) => {
                 return (
-                    <div>
+                    <div key={key}>
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar>

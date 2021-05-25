@@ -21,6 +21,12 @@ const GameEngine: React.FC = () => {
         getData()
     }, [])
 
+  /*   setInterval(() => {
+        axios.get('http://localhost:8080/room/fee52b5b-4782-473d-9431-131e07693d51').then((data) => {
+            setViole(data.data);
+        })
+    }, 2000); */
+
     const savePosition = async (newPosition: object) => {
 
         const data = new URLSearchParams({

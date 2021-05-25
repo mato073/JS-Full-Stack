@@ -21,11 +21,11 @@ export class RoomService {
     }
 
     async getRoom(link: string) {
-        let {name, creator, players, board} = await this.roomsRepository.findOne({link});
+        let { name, creator, players, board } = await this.roomsRepository.findOne({ link });
         players = JSON.parse(players);
         creator = JSON.parse(creator);
         board = JSON.parse(board);
-        return {name, creator, players, board}
+        return { name, creator, players, board }
     }
 
     async savePosition(link: string, newPosition: string) {
@@ -35,7 +35,7 @@ export class RoomService {
         }
         room.board = newPosition;
         await this.roomsRepository.save(room);
-        return {message: 'sucess', status: 200}
+        return { message: 'sucess', status: 200 }
     }
 
     async StartRooms(link: string, token: string) {
@@ -107,7 +107,7 @@ export class RoomService {
 
         try {
             this.roomsRepository.insert(room);
-            return ('Room successfully created');
+            return { link: link, status: 200 };
         } catch (err) {
             return (err);
         }
