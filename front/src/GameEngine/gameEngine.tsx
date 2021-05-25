@@ -15,37 +15,51 @@ const GameEngine: React.FC = () => {
 
     React.useEffect(() => {
         const getData = async () => {
-            const data = await axios.get('http://localhost:8080/room/possition');
+            const data = await axios.get('http://localhost:8080/room/fee52b5b-4782-473d-9431-131e07693d51');
             setViole(data.data);
         }
         getData()
     }, [])
 
+    const savePosition = async (newPosition: object) => {
+
+        const data = new URLSearchParams({
+            newPosition: JSON.stringify(newPosition),
+        })
+
+        const url = 'http://localhost:8080/room/newPosition/fee52b5b-4782-473d-9431-131e07693d51'
+        try {
+            const result = await axios.post(url, data)
+        } catch (err) {
+            console.error('err =', err);
+        }
+    }
 
     const changePosition = (e: any, key: number) => {
         if (selectedPice !== "") {
             let newTab = viole;
             let Temp;
             if (colorChip === 'Purple') {
-                Temp = newTab.Purple[posVAlue].position
-                newTab.Purple[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Purple[posVAlue].position
+                newTab.board.Purple[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Red') {
-                Temp = newTab.Red[posVAlue].position
-                newTab.Red[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Red[posVAlue].position
+                newTab.board.Red[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Orange') {
-                Temp = newTab.Orange[posVAlue].position
-                newTab.Orange[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Orange[posVAlue].position
+                newTab.board.Orange[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Yellow') {
-                Temp = newTab.Yellow[posVAlue].position
-                newTab.Yellow[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Yellow[posVAlue].position
+                newTab.board.Yellow[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Green') {
-                Temp = newTab.Green[posVAlue].position
-                newTab.Green[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Green[posVAlue].position
+                newTab.board.Green[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Blue') {
-                Temp = newTab.Blue[posVAlue].position
-                newTab.Blue[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.board.Blue[posVAlue].position
+                newTab.board.Blue[posVAlue].position = e.target.getAttribute('transform');
             }
-            newTab.White[key].position = Temp;
+            newTab.board.White[key].position = Temp;
+            savePosition(newTab.board);
             setViole(newTab);
             setSelectedPice("");
         }
@@ -57,11 +71,19 @@ const GameEngine: React.FC = () => {
         setPostValu(key);
     }
 
-    return (
-        <div>
-            <Board serverPosition={viole} position={(e: any, key: number, chip: string) => position(e, key, chip)} changePosition={(e: any, key: number) => changePosition(e, key)} />
-        </div>
-    )
+    if (viole !== null && viole !== undefined) {
+        return (
+            <div>
+                <Board serverPosition={viole.board} position={(e: any, key: number, chip: string) => position(e, key, chip)} changePosition={(e: any, key: number) => changePosition(e, key)} />
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <h1>The game is loading</h1>
+            </div>
+        )
+    }
 }
 
 export default GameEngine

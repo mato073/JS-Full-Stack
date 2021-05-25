@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+const position = require('./position.json')
 
 @Entity()
 export class Rooms {
@@ -22,4 +23,7 @@ export class Rooms {
     
     @Column({ default: null, type:"longtext"})
     players: string;
+
+    @Column({ default: JSON.stringify(position), type:"longtext"})
+    board: string;
 }

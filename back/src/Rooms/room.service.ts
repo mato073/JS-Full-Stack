@@ -20,6 +20,24 @@ export class RoomService {
         return this.roomsRepository.find();
     }
 
+    async getRoom(link: string) {
+        let {name, creator, players, board} = await this.roomsRepository.findOne({link});
+        players = JSON.parse(players);
+        creator = JSON.parse(creator);
+        board = JSON.parse(board);
+        return {name, creator, players, board}
+    }
+
+    async savePosition(link: string, newPosition: string) {
+        const room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            throw new NotFoundException('No rooms found')
+        }
+        room.board = newPosition;
+        await this.roomsRepository.save(room);
+        return {message: 'sucess', status: 200}
+    }
+
     async StartRooms(link: string, token: string) {
         const id = await this.getIdFromToken(token);
         const room = await this.roomsRepository.findOne({ link });
