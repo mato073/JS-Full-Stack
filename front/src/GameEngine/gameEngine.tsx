@@ -1,6 +1,7 @@
 import React from 'react'
 import Board from './board'
 import axios from 'axios'
+import { SavePosition } from '../Services/rooms'
 
 
 const GameEngine: React.FC = () => {
@@ -9,37 +10,19 @@ const GameEngine: React.FC = () => {
     const [selectedPice, setSelectedPice] = React.useState("");
     const [posVAlue, setPostValu] = React.useState(Number);
     const [colorChip, setColorChip] = React.useState("");
+    const link = localStorage.getItem('link');
 
 
 
 
     React.useEffect(() => {
         const getData = async () => {
-            const data = await axios.get('http://localhost:8080/room/fee52b5b-4782-473d-9431-131e07693d51');
+            const link = localStorage.getItem('link')
+            const data = await axios.get(`http://localhost:8080/room/${link}`);
             setViole(data.data);
         }
         getData()
     }, [])
-
-  /*   setInterval(() => {
-        axios.get('http://localhost:8080/room/fee52b5b-4782-473d-9431-131e07693d51').then((data) => {
-            setViole(data.data);
-        })
-    }, 2000); */
-
-    const savePosition = async (newPosition: object) => {
-
-        const data = new URLSearchParams({
-            newPosition: JSON.stringify(newPosition),
-        })
-
-        const url = 'http://localhost:8080/room/newPosition/fee52b5b-4782-473d-9431-131e07693d51'
-        try {
-            const result = await axios.post(url, data)
-        } catch (err) {
-            console.error('err =', err);
-        }
-    }
 
     const changePosition = (e: any, key: number) => {
         if (selectedPice !== "") {
@@ -65,7 +48,7 @@ const GameEngine: React.FC = () => {
                 newTab.board.Blue[posVAlue].position = e.target.getAttribute('transform');
             }
             newTab.board.White[key].position = Temp;
-            savePosition(newTab.board);
+            SavePosition(newTab.board);
             setViole(newTab);
             setSelectedPice("");
         }

@@ -26,5 +26,21 @@ export async function newRoom(name: string) {
     } catch (err) {
         return { status: false };
     }
+}
+
+export async function SavePosition(data: any) {
+    const link = localStorage.getItem('link')
+
+    const url = `http://localhost:8080/room/newPosition/${link}`
+    console.log('data =', data);
+
+    const body = new URLSearchParams({
+        newPosition: JSON.stringify(data)
+    })
+    try {
+        const result = await axios.post(url, body)
+    } catch (err) {
+        console.error('err =', err);
+    }
 
 }
