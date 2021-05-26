@@ -19,11 +19,11 @@ export class RoomGateway {
     this.server.emit('possition', data)
   }
 
-  /*   handleDisconnect(client: Socket) {
-      this.logger.log(`Client disconnected: ${client.id}`);
-    }
-  
-    handleConnection(client: Socket, ...args: any[]) {
-      this.logger.log(`Client connected: ${client.id}`);
-    } */
+  handleDisconnect(client: Socket) {
+    this.logger.log(`Client disconnected: ${client.id}`);
+  }
+
+  handleConnection(client: Socket, ...args: any[]) {
+    this.logger.log(`Client connected: ${client.id}`);
+  }
 }

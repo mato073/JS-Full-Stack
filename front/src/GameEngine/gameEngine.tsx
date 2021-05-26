@@ -2,9 +2,10 @@ import React from 'react'
 import Board from './board'
 import axios from 'axios'
 import { SavePosition } from '../Services/rooms'
-import * as io from "socket.io-client"
+/* import * as io from "socket.io-client" */
+import socket from '../Services/socketConect'
 
-const socket = io.connect('http://localhost:8080/');
+//let socket: any  //io.connect('http://localhost:8080/');
 
 const GameEngine: React.FC = () => {
 
@@ -16,7 +17,6 @@ const GameEngine: React.FC = () => {
     const link = localStorage.getItem('link');
 
 
-    io.connect('http://localhost:8080/');
     React.useEffect(() => {
         const getData = async () => {
             const link = localStorage.getItem('link')
@@ -25,6 +25,11 @@ const GameEngine: React.FC = () => {
             setMypos(data.data.board)
         }
         getData()
+    }, [])
+
+    React.useEffect(() => {
+        console.log("id", socket.id)
+        socket.connect();
     }, [])
 
     React.useEffect(() => {
