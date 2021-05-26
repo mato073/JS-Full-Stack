@@ -2,54 +2,67 @@ import React from 'react'
 import Board from './board'
 import axios from 'axios'
 import { SavePosition } from '../Services/rooms'
+import * as io from "socket.io-client"
 
+const socket = io.connect('http://localhost:8080/');
 
 const GameEngine: React.FC = () => {
 
     const [viole, setViole] = React.useState<any | null>(null);
+    const [myPos, setMypos] = React.useState<any | null>(null);
     const [selectedPice, setSelectedPice] = React.useState("");
     const [posVAlue, setPostValu] = React.useState(Number);
     const [colorChip, setColorChip] = React.useState("");
     const link = localStorage.getItem('link');
 
 
-
-
+    io.connect('http://localhost:8080/');
     React.useEffect(() => {
         const getData = async () => {
             const link = localStorage.getItem('link')
             const data = await axios.get(`http://localhost:8080/room/${link}`);
             setViole(data.data);
+            setMypos(data.data.board)
         }
         getData()
     }, [])
 
+    React.useEffect(() => {
+        socket.on('possition', ({ data }: any) => {
+            setMypos(JSON.parse(data));
+        })
+    }, [])
+
+    const SendPosition = (possition: object) => {
+        socket.emit('possition', { data: JSON.stringify(possition) });
+    }
+
     const changePosition = (e: any, key: number) => {
         if (selectedPice !== "") {
-            let newTab = viole;
+            let newTab = myPos;
             let Temp;
             if (colorChip === 'Purple') {
-                Temp = newTab.board.Purple[posVAlue].position
-                newTab.board.Purple[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Purple[posVAlue].position
+                newTab.Purple[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Red') {
-                Temp = newTab.board.Red[posVAlue].position
-                newTab.board.Red[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Red[posVAlue].position
+                newTab.Red[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Orange') {
-                Temp = newTab.board.Orange[posVAlue].position
-                newTab.board.Orange[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Orange[posVAlue].position
+                newTab.Orange[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Yellow') {
-                Temp = newTab.board.Yellow[posVAlue].position
-                newTab.board.Yellow[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Yellow[posVAlue].position
+                newTab.Yellow[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Green') {
-                Temp = newTab.board.Green[posVAlue].position
-                newTab.board.Green[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Green[posVAlue].position
+                newTab.Green[posVAlue].position = e.target.getAttribute('transform');
             } else if (colorChip === 'Blue') {
-                Temp = newTab.board.Blue[posVAlue].position
-                newTab.board.Blue[posVAlue].position = e.target.getAttribute('transform');
+                Temp = newTab.Blue[posVAlue].position
+                newTab.Blue[posVAlue].position = e.target.getAttribute('transform');
             }
-            newTab.board.White[key].position = Temp;
-            SavePosition(newTab.board);
-            setViole(newTab);
+            newTab.White[key].position = Temp;
+            SavePosition(newTab);
+            SendPosition(newTab);
             setSelectedPice("");
         }
     }
@@ -63,7 +76,7 @@ const GameEngine: React.FC = () => {
     if (viole !== null && viole !== undefined) {
         return (
             <div>
-                <Board serverPosition={viole.board} position={(e: any, key: number, chip: string) => position(e, key, chip)} changePosition={(e: any, key: number) => changePosition(e, key)} />
+                <Board serverPosition={myPos} position={(e: any, key: number, chip: string) => position(e, key, chip)} changePosition={(e: any, key: number) => changePosition(e, key)} />
             </div>
         )
     } else {
