@@ -6,7 +6,8 @@ import { Rooms } from './room.entity'
 import { JwtService } from '@nestjs/jwt';
 import { Users } from '../Oauth/user.entity'
 import { v4 as uuidv4 } from 'uuid';
-const position = require('./position.json')
+
+
 
 @Injectable()
 export class RoomService {
@@ -16,6 +17,7 @@ export class RoomService {
         private jwtService: JwtService
     ) { }
 
+    tada: any;
     getRooms() {
         return this.roomsRepository.find();
     }
@@ -25,6 +27,7 @@ export class RoomService {
         players = JSON.parse(players);
         creator = JSON.parse(creator);
         board = JSON.parse(board);
+        this.tada = { name, creator, players, board }
         return { name, creator, players, board }
     }
 
@@ -75,7 +78,7 @@ export class RoomService {
     }
 
     getPosition() {
-        return position
+        return null
     }
     async joinRooms(link, token) {
         const id = await this.getIdFromToken(token);

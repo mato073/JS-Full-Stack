@@ -7,11 +7,9 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Connection } from 'typeorm';
 
-import {UserModule} from './Oauth/user.module'
-import {RoomModule} from './Rooms/room.module'
+import { UserModule } from './Oauth/user.module'
+import { RoomModule } from './Rooms/room.module'
 import config from '../ormconfig'
-
-
 
 @Module({
   imports: [
@@ -23,9 +21,9 @@ import config from '../ormconfig'
     AppController,
   ],
   providers: [
-    AppService
+    AppService,
   ],
 })
-export class AppModule { 
-  constructor(private connection: Connection) {}
+export class AppModule {
+  constructor(private connection: Connection) { }
 }

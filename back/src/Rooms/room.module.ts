@@ -4,7 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoomService } from './room.service'
 import { Rooms } from './room.entity'
 import { JwtModule } from '@nestjs/jwt'
-import {Users} from '../Oauth/user.entity'
+import { Users } from '../Oauth/user.entity'
+import { RoomGateway } from './room.gateway'
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import {Users} from '../Oauth/user.entity'
     }),
   ],
   controllers: [RoomController],
-  providers: [RoomService]
+  providers: [RoomService, RoomGateway]
 })
 export class RoomModule {
 }
