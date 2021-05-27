@@ -80,23 +80,31 @@ export class RoomService {
     getPosition() {
         return null
     }
-    async joinRooms(link, token) {
+    async joinRooms(link: string, token: string) {
         const id = await this.getIdFromToken(token);
         const user = await this.usersRepository.findOne({ id });
         const room = await this.roomsRepository.findOne({ link });
         if (!room || !user) {
             throw new NotFoundException('The link is invalid ! or no room exist')
-        } else if (room.status === 'offline') {
-            throw new NotFoundException('The room is currently offline')
+        } else if (room.status === 'online') {
+            throw new NotFoundException('The has alrady started')
         }
 
         const playes = JSON.parse(room.players);
-        if (playes.lenthe === 6)
+        if ((Object.keys(playes).length - 1) === 6)
             throw new NotFoundException('The room is full')
-        playes.push(user);
+        const colors = ['purple', 'blue', 'green', 'yellow', 'orange']
+        const newUser = {
+            color: colors[(Object.keys(playes).length - 1)],
+            name: user.name,
+            id: user.id
+        }
+        playes.push(newUser);
+        console.log("number =", Object.keys(playes).length);
+
         room.players = JSON.stringify(playes);
         await this.roomsRepository.save(room);
-        return ('Player add to the gaem')
+        return { status: 200, message: 'Player added to the room' }
     }
 
     async postRoom(name: string, token: string,) {
@@ -105,9 +113,18 @@ export class RoomService {
         const date = new Date();
         const user = await this.usersRepository.findOne({ id });
         const player = []
-        player.push(user);
-        const room = new Room(name, link, date, JSON.stringify([user]), JSON.stringify(player));
-
+        const newUser = {
+            color: 'red',
+            name: user.name,
+            id: user.id
+        }
+        const creator = {
+            name: user.name,
+            id: user.id
+        }
+        player.push(newUser);
+        const room = new Room(name, link, date, JSON.stringify([creator]), JSON.stringify(player));
+        //add room in creator  db
         try {
             this.roomsRepository.insert(room);
             return { link: link, status: 200 };

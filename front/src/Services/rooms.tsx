@@ -4,7 +4,6 @@ export async function getAllRooms() {
     const url = "http://localhost:8080/room/rooms"
     try {
         const result = await axios.get(url);
-        console.log('rooms =', result.data);
         return { rooms: result.data, sussec: true };
     } catch (err) {
         return { sussec: false }
@@ -32,7 +31,6 @@ export async function SavePosition(data: any) {
     const link = localStorage.getItem('link')
 
     const url = `http://localhost:8080/room/newPosition/${link}`
-    console.log('data =', data);
 
     const body = new URLSearchParams({
         newPosition: JSON.stringify(data)
@@ -43,4 +41,19 @@ export async function SavePosition(data: any) {
         console.error('err =', err);
     }
 
+}
+
+export async function joinRoom(link: string) {
+    const token = localStorage.getItem('token')
+
+    const url = `http://localhost:8080/room/join/${token}`
+    const data = new URLSearchParams({
+        link: link
+    })
+    try {
+        const result = await axios.patch(url, data)
+        return result.data
+    } catch (err) {
+        return err.data;
+    }
 }

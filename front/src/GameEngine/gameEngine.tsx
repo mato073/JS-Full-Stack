@@ -2,25 +2,32 @@ import React from 'react'
 import Board from './board'
 import axios from 'axios'
 import { SavePosition } from '../Services/rooms'
-/* import * as io from "socket.io-client" */
 import socket from '../Services/socketConect'
+import { getUser } from '../Services/user'
 
-//let socket: any  //io.connect('http://localhost:8080/');
+interface Props {
+    setPlayers: any,
+    players: any
+}
 
-const GameEngine: React.FC = () => {
+const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
 
     const [viole, setViole] = React.useState<any | null>(null);
     const [myPos, setMypos] = React.useState<any | null>(null);
     const [selectedPice, setSelectedPice] = React.useState("");
     const [posVAlue, setPostValu] = React.useState(Number);
     const [colorChip, setColorChip] = React.useState("");
-    const link = localStorage.getItem('link');
 
 
     React.useEffect(() => {
         const getData = async () => {
             const link = localStorage.getItem('link')
             const data = await axios.get(`http://localhost:8080/room/${link}`);
+            const user = await getUser();
+
+            socket.connect();
+
+            socket.emit('newPlayer', { data: user.user.name })
             setViole(data.data);
             setMypos(data.data.board)
         }
@@ -28,13 +35,19 @@ const GameEngine: React.FC = () => {
     }, [])
 
     React.useEffect(() => {
-        console.log("id", socket.id)
         socket.connect();
     }, [])
 
     React.useEffect(() => {
         socket.on('possition', ({ data }: any) => {
             setMypos(JSON.parse(data));
+        })
+        socket.on('newPlayer', ({ data }: any) => {
+            const temp = players;
+            console.log(temp);
+            
+            temp.push({ name: data });
+            setPlayers(temp);
         })
     }, [])
 

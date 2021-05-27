@@ -8,7 +8,6 @@ import Avatar from '@material-ui/core/Avatar';
 import SportsEsports from '@material-ui/icons/SportsEsports';
 import Divider from '@material-ui/core/Divider';
 import { Button } from '@material-ui/core/'
-import { link } from 'fs';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,8 +43,6 @@ const ListsRooms: React.FC<Props> = (props) => {
             )
         } else {
             return rooms.map((item: any, key: number) => {
-                console.log(item);
-
                 return (
                     <div key={key}>
                         <ListItem>

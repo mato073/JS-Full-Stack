@@ -1,14 +1,7 @@
 import React from 'react'
 import { Modal, makeStyles, Container, Typography, CssBaseline, TextField, Button } from '@material-ui/core';
-import { newRoom } from '../../../Services/rooms'
+import { joinRoom } from '../../../Services/rooms'
 
-interface Props {
-    open: boolean,
-    handle: any,
-    history: {
-        push(url: string): void;
-    };
-}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -32,21 +25,28 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+interface Props {
+    open: boolean,
+    handle: any,
+    history: {
+        push(url: string): void;
+    };
+}
 const ModalView: React.FC<Props> = ({ open, handle, history }) => {
 
 
     const classes = useStyles();
-    const [name, setName] = React.useState("");
+    const [link, setLink] = React.useState("");
 
     const hand_name = (e: any) => {
-        setName(e.target.value)
+        setLink(e.target.value)
     }
 
-    const creatRoom = async () => {
-        if (name !== "") {
-            const result = await newRoom(name);
-            localStorage.setItem('link', result.link)
-            history.push('/game')
+    const join = async () => {
+        if (link !== "") {
+            const result = await joinRoom(link);
+            if (result.status === 200)
+                history.push('/game');
         }
     }
     const body = () => {
@@ -62,9 +62,9 @@ const ModalView: React.FC<Props> = ({ open, handle, history }) => {
                             variant="outlined"
                             margin="normal"
                             fullWidth
-                            id="name"
-                            label="Name of the room"
-                            name="name"
+                            id="Link"
+                            label="Link of the room"
+                            name="Link"
                             onChange={hand_name}
                         />
                         <Button
@@ -72,10 +72,10 @@ const ModalView: React.FC<Props> = ({ open, handle, history }) => {
                             fullWidth
                             variant="contained"
                             color="primary"
-                            onClick={() => creatRoom()}
+                            onClick={() => join()}
                             className={classes.submit}
                         >
-                            Create
+                            Join
                      </Button>
                     </div>
                 </div>

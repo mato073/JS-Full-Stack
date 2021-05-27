@@ -19,6 +19,11 @@ export class RoomGateway {
     this.server.emit('possition', data)
   }
 
+  @SubscribeMessage('newPlayer')
+  handNewPlayer(@MessageBody() data: string): void {
+    this.server.emit('newPlayer', data)
+  }
+
   handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: ${client.id}`);
   }
