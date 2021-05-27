@@ -45,8 +45,11 @@ const ModalView: React.FC<Props> = ({ open, handle, history }) => {
     const join = async () => {
         if (link !== "") {
             const result = await joinRoom(link);
-            if (result.status === 200)
+
+            if (result.status === 200) {
+                localStorage.setItem('link', link);
                 history.push('/game');
+            }
         }
     }
     const body = () => {
