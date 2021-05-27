@@ -27,7 +27,8 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
 
             socket.connect();
 
-            socket.emit('newPlayer', { data: user.user.name })
+            /* socket.emit('newPlayer', { data: user.user.name }) */
+            socket.emit('join', { room: 'test', userName: 'Ronan' })
             setViole(data.data);
             setMypos(data.data.board)
         }
@@ -45,7 +46,7 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
         socket.on('newPlayer', ({ data }: any) => {
             const temp = players;
             console.log(temp);
-            
+
             temp.push({ name: data });
             setPlayers(temp);
         })

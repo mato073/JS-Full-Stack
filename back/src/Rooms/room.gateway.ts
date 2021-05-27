@@ -19,6 +19,12 @@ export class RoomGateway {
     this.server.emit('possition', data)
   }
 
+  @SubscribeMessage('join')
+  JoinRoom(client: Socket, data: { room: string, userName: string}): void {
+    this.logger.log(`Client join the room ${data.userName}`)
+    /* this.server.emit('newJoin', data) */
+  }
+
   @SubscribeMessage('newPlayer')
   handNewPlayer(@MessageBody() data: string): void {
     this.server.emit('newPlayer', data)
