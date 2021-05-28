@@ -18,6 +18,10 @@ const useStyles = makeStyles({
     },
     drawerPaper: {
         width: drawerWidth
+    },
+    listPlayer: {
+        display: 'flex',
+        flexDirection: 'column'
     }
 })
 
@@ -26,21 +30,23 @@ const Game: React.FC = () => {
     const [players, setPlayers] = React.useState<any | null>([]);
 
     const listePlayer = () => {
-        console.log('players =', players);
+        console.log('players ici =', players[0]);
 
         if (players !== null && players !== undefined) {
             console.log('test');
             return players.map((item: any, key: number) => {
-                return (
-                    <div key={key}>
-                        <ListItemAvatar>
-                            <Avatar>
-                                <PersonIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={item.name} />
-                    </div>
-                );
+                if (item.status === 'online') {
+                    return (
+                        <div key={key}>
+                            <ListItemAvatar>
+                                <Avatar>
+                                    <PersonIcon />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={item.name} />
+                        </div>
+                    );
+                }
             })
         }
     }
@@ -50,7 +56,7 @@ const Game: React.FC = () => {
                 <div>
                     <Typography variant="h5" >My Room</Typography>
                 </div>
-                <ListItem>
+                <ListItem className={classes.listPlayer}>
                     {listePlayer()}
                     {/*   <ListItemAvatar>
                         <Avatar>

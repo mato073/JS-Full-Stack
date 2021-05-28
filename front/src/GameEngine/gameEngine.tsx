@@ -10,6 +10,8 @@ interface Props {
     players: any
 }
 
+const link = localStorage.getItem('link')
+
 const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
 
     const [viole, setViole] = React.useState<any | null>(null);
@@ -21,14 +23,10 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
 
     React.useEffect(() => {
         const getData = async () => {
-            const link = localStorage.getItem('link')
             const data = await axios.get(`http://localhost:8080/room/${link}`);
-            const user = await getUser();
-
+            const { user } = await getUser();
             socket.connect();
-
-            /* socket.emit('newPlayer', { data: user.user.name }) */
-            socket.emit('join', { room: 'test', userName: 'Ronan' })
+            socket.emit('join', { room: link, user: { name: user.name, id: user.id } })
             setViole(data.data);
             setMypos(data.data.board)
         }
@@ -36,24 +34,17 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
     }, [])
 
     React.useEffect(() => {
-        socket.connect();
-    }, [])
-
-    React.useEffect(() => {
-        socket.on('possition', ({ data }: any) => {
-            setMypos(JSON.parse(data));
+        socket.on('possition', (data: object) => {
+            setMypos(data);
         })
-        socket.on('newPlayer', ({ data }: any) => {
-            const temp = players;
-            console.log(temp);
-
-            temp.push({ name: data });
-            setPlayers(temp);
+        socket.on('newPlayer', (data: object) => {
+            console.log('players =', data);
+            setPlayers(data);
         })
     }, [])
 
     const SendPosition = (possition: object) => {
-        socket.emit('possition', { data: JSON.stringify(possition) });
+        socket.emit('possition', { room: link, position: possition });
     }
 
     const changePosition = (e: any, key: number) => {

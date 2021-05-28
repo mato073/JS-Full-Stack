@@ -1,9 +1,15 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer, MessageBody } from '@nestjs/websockets';
+import { Inject } from '@nestjs/common';
 import { Logger } from '@nestjs/common'
 import { Socket, Server } from 'socket.io';
+import { RoomService } from './room.service'
 
 @WebSocketGateway()
 export class RoomGateway {
+
+  @Inject()
+  private roomService: RoomService
+
   @WebSocketServer()
   server: Server;
 
@@ -15,23 +21,24 @@ export class RoomGateway {
 
 
   @SubscribeMessage('possition')
-  handleEvent(@MessageBody() data: string): void {
-    this.server.emit('possition', data)
+  handleEvent(client: Socket, data: { room: string, possition: object }): void {
+    this.server.to(data.room).emit('possition', data.possition)
   }
 
   @SubscribeMessage('join')
-  JoinRoom(client: Socket, data: { room: string, userName: string}): void {
-    this.logger.log(`Client join the room ${data.userName}`)
-    /* this.server.emit('newJoin', data) */
+  async JoinRoom(client: Socket, data: { room: string, user: { name: string, id: number } }) {
+    client.userId = data.user.id;
+    client.room = data.room
+    client.join(data.room)
+
+    const users = await this.roomService.getUserStatus(data.user, data.room);
+    this.server.to(data.room).emit('newPlayer', users.users)
   }
 
-  @SubscribeMessage('newPlayer')
-  handNewPlayer(@MessageBody() data: string): void {
-    this.server.emit('newPlayer', data)
-  }
-
-  handleDisconnect(client: Socket) {
-    this.logger.log(`Client disconnected: ${client.id}`);
+  async handleDisconnect(client: Socket) {
+    this.logger.log(`Client disconnected: ${client.userId}`);
+    const users = await this.roomService.playerDisconect(client.userId, client.room)
+    this.server.to(client.room).emit('newPlayer', users.users);
   }
 
   handleConnection(client: Socket, ...args: any[]) {

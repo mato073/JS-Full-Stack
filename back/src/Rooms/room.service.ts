@@ -133,6 +133,34 @@ export class RoomService {
         }
     }
 
+    async getUserStatus(user: { name: string, id: number }, link: string) {
+        let room = await this.roomsRepository.findOne({ link });
+        const users = JSON.parse(room.players);
+        const index = Object(users).findIndex((el: any) => el.id === user.id);
+
+        if (index === -1) {
+            //add user in db
+            console.log('user not in db !');
+            return { status: 400, users: {} }
+
+        } else {
+            users[index].status = 'online'
+            room.players = JSON.stringify(users);
+            this.roomsRepository.save(room);
+            return { status: 200, users: users }
+        }
+    }
+
+    async playerDisconect(userId: number, link: string) {
+        let room = await this.roomsRepository.findOne({ link });
+        const users = JSON.parse(room.players);
+        const index = Object(users).findIndex((el: any) => el.id === userId);
+        users[index].status = 'ofline'
+        room.players = JSON.stringify(users);
+        this.roomsRepository.save(room);
+        return { status: 200, users: users }
+    }
+
     async getIdFromToken(token: string) {
         const { id } = await this.jwtService.verifyAsync(token);
         return id;
