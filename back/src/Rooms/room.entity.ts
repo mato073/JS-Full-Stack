@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 const position = require('./position.json')
 
 @Entity()
@@ -8,11 +8,11 @@ export class Rooms {
 
     @Column()
     link: string;
-    
+
     @Column()
     name: string;
 
-    @Column({default: 'offline'})
+    @Column({ default: 'offline' })
     status: string;
 
     @Column()
@@ -20,10 +20,13 @@ export class Rooms {
 
     @Column()
     creator: string;
-    
-    @Column({ default: null, type:"longtext"})
+
+    @Column({ default: null, type: "longtext" })
     players: string;
 
-    @Column({ default: JSON.stringify(position), type:"longtext"})
+    @Column({ default: 'red', type: "text" })
+    turn: string;
+
+    @Column({ default: JSON.stringify(position), type: "longtext" })
     board: string;
 }

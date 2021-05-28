@@ -23,12 +23,12 @@ export class RoomService {
     }
 
     async getRoom(link: string) {
-        let { name, creator, players, board } = await this.roomsRepository.findOne({ link });
+        let { name, creator, players, board, turn } = await this.roomsRepository.findOne({ link });
         players = JSON.parse(players);
         creator = JSON.parse(creator);
         board = JSON.parse(board);
         this.tada = { name, creator, players, board }
-        return { name, creator, players, board }
+        return { name, creator, players, board, turn }
     }
 
     async savePosition(link: string, newPosition: string) {
@@ -159,6 +159,12 @@ export class RoomService {
         room.players = JSON.stringify(users);
         this.roomsRepository.save(room);
         return { status: 200, users: users }
+    }
+
+    async newTurn(link: string, color: string) {
+        let room = await this.roomsRepository.findOne({ link });
+        room.turn = color;
+        this.roomsRepository.save(room);
     }
 
     async getIdFromToken(token: string) {

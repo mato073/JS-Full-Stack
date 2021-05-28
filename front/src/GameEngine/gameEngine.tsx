@@ -13,21 +13,23 @@ interface Props {
 const link = localStorage.getItem('link')
 
 const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
-
-    const [viole, setViole] = React.useState<any | null>(null);
     const [myPos, setMypos] = React.useState<any | null>(null);
     const [selectedPice, setSelectedPice] = React.useState("");
+    const [myColor, setMyColor] = React.useState(String);
     const [posVAlue, setPostValu] = React.useState(Number);
     const [colorChip, setColorChip] = React.useState("");
+    const [curentTurn, setCutentTurn] = React.useState<any | null>();
 
 
     React.useEffect(() => {
         const getData = async () => {
             const data = await axios.get(`http://localhost:8080/room/${link}`);
             const { user } = await getUser();
+            const curent = data.data.players.find((item: any) => item.id === user.id);
+            setMyColor(curent.color);
+            setCutentTurn(data.data.turn);
             socket.connect();
             socket.emit('join', { room: link, user: { name: user.name, id: user.id } })
-            setViole(data.data);
             setMypos(data.data.board)
         }
         getData()
@@ -38,13 +40,25 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
             setMypos(data);
         })
         socket.on('newPlayer', (data: object) => {
-            console.log('players =', data);
             setPlayers(data);
+        })
+        socket.on('newTurn', (color: string) => {
+            setCutentTurn(color);
         })
     }, [])
 
     const SendPosition = (possition: object) => {
         socket.emit('possition', { room: link, position: possition });
+    }
+
+    const checkTurn = () => {
+        if (myColor === curentTurn)
+            return true;
+        return false
+    }
+
+    const nexTrun = () => {
+        socket.emit('newTurn', { room: link, color: myColor });
     }
 
     const changePosition = (e: any, key: number) => {
@@ -73,17 +87,21 @@ const GameEngine: React.FC<Props> = ({ setPlayers, players }) => {
             newTab.White[key].position = Temp;
             SavePosition(newTab);
             SendPosition(newTab);
+            nexTrun();
             setSelectedPice("");
         }
     }
 
     const position = (e: any, key: number, chip: string) => {
-        setSelectedPice(e.target.id);
-        setColorChip(chip);
-        setPostValu(key);
+        const value = checkTurn();
+        if (value === true) {
+            setSelectedPice(e.target.id);
+            setColorChip(chip);
+            setPostValu(key);
+        }
     }
 
-    if (viole !== null && viole !== undefined) {
+    if (Board !== null && Board !== undefined) {
         return (
             <div>
                 <Board serverPosition={myPos} position={(e: any, key: number, chip: string) => position(e, key, chip)} changePosition={(e: any, key: number) => changePosition(e, key)} />
