@@ -21,8 +21,8 @@ export class RoomGateway {
 
 
   @SubscribeMessage('possition')
-  handleEvent(client: Socket, data: { room: string, possition: object }): void {
-    this.server.to(data.room).emit('possition', data.possition)
+  handleEvent(client: Socket, data: { room: string, position: object }): void {
+    this.server.to(data.room).emit('possition', data.position)
   }
 
   @SubscribeMessage('join')
