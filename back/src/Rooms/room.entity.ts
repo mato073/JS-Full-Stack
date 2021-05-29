@@ -12,7 +12,7 @@ export class Rooms {
     @Column()
     name: string;
 
-    @Column({ default: 'not started'})
+    @Column({ default: 'not started' })
     status: string;
 
     @Column()
@@ -29,4 +29,7 @@ export class Rooms {
 
     @Column({ default: JSON.stringify(position), type: "longtext" })
     board: string;
+
+    @Column({ default: 0 })
+    round: number;
 }

@@ -38,15 +38,12 @@ export class RoomGateway {
   }
 
   @SubscribeMessage('newTurn')
-  handleTurn(client: Socket, data: { room: string, color: string }): void {
-    const colors = ['red', 'purple', 'blue', 'green', 'yellow', 'orange']
-    const index = colors.findIndex((el: string) => el === data.color);
-    if (index === 5) {
-      this.server.to(data.room).emit('newTurn', colors[0])
-      this.roomService.newTurn(data.room, colors[0])
-    } else {
-      this.server.to(data.room).emit('newTurn', colors[index + 1])
-      this.roomService.newTurn(data.room, colors[index + 1])
+  async handleTurn(client: Socket, data: { room: string, color: string }) {
+    const result = await this.roomService.newTurn(data.room, data.color);
+    if (result.status === 200) {
+      console.log('ici');
+      
+      this.server.to(data.room).emit('newTurn', result.color);
     }
   }
 

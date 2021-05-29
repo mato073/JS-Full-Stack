@@ -185,10 +185,25 @@ export class RoomService {
         return { status: 200, users: users }
     }
 
-    async newTurn(link: string, color: string) {
+    async newTurn(link: string, mycolor: string,) {
+        const colors = ['red', 'purple', 'blue', 'green', 'yellow', 'orange']
         let room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            return { status: 400, color: "" }
+        }
+        const players = JSON.parse(room.players);
+        const index = colors.findIndex((el: string) => el === mycolor);
+        let color: string;
+        
+        if (index + 1 === Object(players).length) {
+            color = colors[0]
+        } else {
+            color = colors[index + 1]
+        }
         room.turn = color;
+        room.round = room.round + 1;
         this.roomsRepository.save(room);
+        return { status: 200, color: color }
     }
 
     async startFromSocket(link: string) {
