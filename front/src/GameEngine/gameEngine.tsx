@@ -1,6 +1,5 @@
 import React from 'react'
 import Board from './board'
-import axios from 'axios'
 import { SavePosition } from '../Services/rooms'
 import socket from '../Services/socketConect'
 import { getUser } from '../Services/user'
@@ -8,16 +7,18 @@ import { getRoom } from '../Services/rooms'
 
 interface Props {
     setPlayers: any,
+    setCutentTurn: any,
     link: string
+    curentTurn: string,
 }
 
-const GameEngine: React.FC<Props> = ({ setPlayers, link }) => {
+const GameEngine: React.FC<Props> = ({ setPlayers, link, curentTurn, setCutentTurn }) => {
     const [myPos, setMypos] = React.useState<any | null>(null);
     const [selectedPice, setSelectedPice] = React.useState("");
     const [myColor, setMyColor] = React.useState(String);
     const [posVAlue, setPostValu] = React.useState(Number);
     const [colorChip, setColorChip] = React.useState("");
-    const [curentTurn, setCutentTurn] = React.useState<any | null>();
+    /* const [curentTurn, setCutentTurn] = React.useState<any | null>(); */
 
 
     React.useEffect(() => {

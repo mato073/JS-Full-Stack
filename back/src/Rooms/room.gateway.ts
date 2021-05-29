@@ -47,7 +47,7 @@ export class RoomGateway {
 
     const users = await this.roomService.getUserStatus(data.user, data.room);
     if (users.status === 201) {
-      this.server.to(client).emit('mycolor', users.color)
+      this.server.to(client.id).emit('mycolor', users.color)
     }
     this.server.to(data.room).emit('newPlayer', users.users)
 
