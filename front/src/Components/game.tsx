@@ -11,7 +11,6 @@ const useStyles = makeStyles({
         display: 'flex'
     },
     page: {
-        background: 'black',
         width: "100%",
     },
     drawer: {
@@ -50,6 +49,7 @@ const Game: React.FC = () => {
     const [players, setPlayers] = React.useState<any | null>([]);
     const { link }: { link: string } = useParams()
     const [curentTurn, setCutentTurn] = React.useState<any | null>();
+    const [started, setStarted] = React.useState("");
 
     const copyToClipboard = () => {
         const el = document.createElement('textarea');
@@ -110,7 +110,13 @@ const Game: React.FC = () => {
                 </div>
             </Drawer>
             {link !== null && (<div className={classes.page} >
-                <GameEngine setPlayers={(item: any) => setPlayers(item)} link={link} curentTurn={curentTurn} setCutentTurn={(item: string) => setCutentTurn(item)} />
+                <GameEngine
+                    setPlayers={(item: any) => setPlayers(item)}
+                    link={link} curentTurn={curentTurn}
+                    setCutentTurn={(item: string) => setCutentTurn(item)}
+                    started={started}
+                    setStarted={(item: string) => setStarted(item)}
+                />
             </div>)}
         </div>
     )

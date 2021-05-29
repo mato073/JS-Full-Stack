@@ -33,6 +33,7 @@ export class RoomService {
             players: JSON.parse(room.players),
             creator: JSON.parse(room.creator),
             board: JSON.parse(room.board),
+            status: room.status,
             turn: room.turn
         }
         return { room: data, status: 200 };
@@ -188,6 +189,16 @@ export class RoomService {
         let room = await this.roomsRepository.findOne({ link });
         room.turn = color;
         this.roomsRepository.save(room);
+    }
+
+    async startFromSocket(link: string) {
+        let room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            return { status: 400 }
+        }
+        room.status = 'started';
+        this.roomsRepository.save(room);
+        return { status: 200 }
     }
 
     async getIdFromToken(token: string) {

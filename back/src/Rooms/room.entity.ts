@@ -12,7 +12,7 @@ export class Rooms {
     @Column()
     name: string;
 
-    @Column({ default: 'offline' })
+    @Column({ default: 'not started'})
     status: string;
 
     @Column()

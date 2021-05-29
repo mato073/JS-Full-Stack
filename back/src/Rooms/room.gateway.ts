@@ -19,6 +19,18 @@ export class RoomGateway {
     this.logger.log('Initialized')
   }
 
+  @SubscribeMessage('join')
+  async JoinRoom(client: Socket, data: { room: string, user: { name: string, id: number } }) {
+    client.userId = data.user.id;
+    client.room = data.room
+    client.join(data.room)
+    const users = await this.roomService.getUserStatus(data.user, data.room);
+    if (users.status === 201) {
+      this.server.to(client.id).emit('mycolor', users.color)
+    }
+    this.server.to(data.room).emit('newPlayer', users.users)
+
+  }
 
   @SubscribeMessage('possition')
   handleEvent(client: Socket, data: { room: string, position: object }): void {
@@ -38,19 +50,12 @@ export class RoomGateway {
     }
   }
 
-  @SubscribeMessage('join')
-  async JoinRoom(client: Socket, data: { room: string, user: { name: string, id: number } }) {
-    client.userId = data.user.id;
-    client.room = data.room
-    client.join(data.room)
-    console.log('JOIN');
-
-    const users = await this.roomService.getUserStatus(data.user, data.room);
-    if (users.status === 201) {
-      this.server.to(client.id).emit('mycolor', users.color)
+  @SubscribeMessage('startGame')
+  async StartRoom(client: Socket, data: { room: string }) {
+    const result = await this.roomService.startFromSocket(data.room);
+    if (result.status === 200) {
+      this.server.to(data.room).emit('gameStart', 'started')
     }
-    this.server.to(data.room).emit('newPlayer', users.users)
-
   }
 
   async handleDisconnect(client: Socket) {
