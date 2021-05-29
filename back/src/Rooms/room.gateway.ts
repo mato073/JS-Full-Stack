@@ -40,11 +40,8 @@ export class RoomGateway {
   @SubscribeMessage('newTurn')
   async handleTurn(client: Socket, data: { room: string, color: string }) {
     const result = await this.roomService.newTurn(data.room, data.color);
-    if (result.status === 200) {
-      console.log('ici');
-      
-      this.server.to(data.room).emit('newTurn', result.color);
-    }
+    if (result.status === 200)
+      this.server.to(data.room).emit('newTurn', result.color, result.round);
   }
 
   @SubscribeMessage('startGame')

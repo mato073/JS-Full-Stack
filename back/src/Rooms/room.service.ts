@@ -34,7 +34,8 @@ export class RoomService {
             creator: JSON.parse(room.creator),
             board: JSON.parse(room.board),
             status: room.status,
-            turn: room.turn
+            turn: room.turn,
+            round: room.round
         }
         return { room: data, status: 200 };
     }
@@ -198,12 +199,15 @@ export class RoomService {
         if (index + 1 === Object(players).length) {
             color = colors[0]
             room.round = room.round + 1;
+            room.turn = color;
+            this.roomsRepository.save(room);
+            return { status: 200, color: color, round: room.round }
         } else {
             color = colors[index + 1]
+            room.turn = color;
+            this.roomsRepository.save(room);
+            return { status: 200, color: color, round: -1 }
         }
-        room.turn = color;
-        this.roomsRepository.save(room);
-        return { status: 200, color: color }
     }
 
     async startFromSocket(link: string) {

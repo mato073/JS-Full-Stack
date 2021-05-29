@@ -50,6 +50,7 @@ const Game: React.FC = () => {
     const { link }: { link: string } = useParams()
     const [curentTurn, setCutentTurn] = React.useState<any | null>();
     const [started, setStarted] = React.useState("");
+    const [round, setRound] = React.useState(Number);
 
     const copyToClipboard = () => {
         const el = document.createElement('textarea');
@@ -108,6 +109,12 @@ const Game: React.FC = () => {
                         <Button variant="contained" color="primary" onClick={() => copyToClipboard()}>Copy</Button>
                     </div>
                 </div>
+                <div className={classes.listDiv}>
+                    <p>Round</p>
+                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 10 }}>
+                        {round}
+                    </div>
+                </div>
             </Drawer>
             {link !== null && (<div className={classes.page} >
                 <GameEngine
@@ -116,6 +123,8 @@ const Game: React.FC = () => {
                     setCutentTurn={(item: string) => setCutentTurn(item)}
                     started={started}
                     setStarted={(item: string) => setStarted(item)}
+                    round={round}
+                    setRound={(round: number) => setRound(round)}
                 />
             </div>)}
         </div>

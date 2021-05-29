@@ -9,13 +9,15 @@ import {/*  */Button } from '@material-ui/core'
 interface Props {
     setPlayers: any,
     setCutentTurn: any,
+    setRound: any,
     setStarted: any,
     link: string
     curentTurn: string,
-    started: string
+    started: string,
+    round: number,
 }
 
-const GameEngine: React.FC<Props> = ({ setPlayers, link, curentTurn, setCutentTurn, started, setStarted }) => {
+const GameEngine: React.FC<Props> = ({ setPlayers, link, curentTurn, setCutentTurn, started, setStarted, round, setRound }) => {
     const [myPos, setMypos] = React.useState<any | null>(null);
     const [selectedPice, setSelectedPice] = React.useState("");
     const [myColor, setMyColor] = React.useState(String);
@@ -36,6 +38,7 @@ const GameEngine: React.FC<Props> = ({ setPlayers, link, curentTurn, setCutentTu
                 const curent = data.room.players.find((item: any) => item.id === user.id);
                 if (curent !== undefined)
                     setMyColor(curent.color);
+                setRound(data.room.round)
                 setCutentTurn(data.room.turn);
                 setStarted(data.room.status);
                 setCreator(data.room.creator[0]);
@@ -55,7 +58,9 @@ const GameEngine: React.FC<Props> = ({ setPlayers, link, curentTurn, setCutentTu
         socket.on('newPlayer', (data: object) => {
             setPlayers(data);
         })
-        socket.on('newTurn', (color: string) => {
+        socket.on('newTurn', (color: string, newRound: number) => {
+            if (newRound !== -1)
+                setRound(newRound)
             setCutentTurn(color);
         })
         socket.on('mycolor', (color: string) => {
