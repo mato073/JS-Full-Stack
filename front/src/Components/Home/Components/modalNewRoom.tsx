@@ -45,8 +45,11 @@ const ModalView: React.FC<Props> = ({ open, handle, history }) => {
     const creatRoom = async () => {
         if (name !== "") {
             const result = await newRoom(name);
-            localStorage.setItem('link', result.link)
-            history.push('/game')
+            console.log(result.link);
+
+            if (result.link !== null && result.link != undefined) {
+                history.push(`/game/${result.link}`)
+            }
         }
     }
     const body = () => {

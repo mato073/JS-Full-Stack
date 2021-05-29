@@ -43,9 +43,14 @@ export class RoomGateway {
     client.userId = data.user.id;
     client.room = data.room
     client.join(data.room)
+    console.log('JOIN');
 
     const users = await this.roomService.getUserStatus(data.user, data.room);
+    if (users.status === 201) {
+      this.server.to(client).emit('mycolor', users.color)
+    }
     this.server.to(data.room).emit('newPlayer', users.users)
+
   }
 
   async handleDisconnect(client: Socket) {

@@ -53,14 +53,14 @@ const ListsRooms: React.FC<Props> = (props) => {
                             </ListItemAvatar>
                             <ListItemText primary={item.name} secondary={item.status} />
                         </ListItem>
-                        <Button
+{/*                         <Button
                             type="submit"
                             fullWidth
                             variant="contained"
                             color="secondary"
                             onClick={() => goToGame(item.link)}
                         > Join
-                         </Button>
+                         </Button> */}
                         < Divider />
                     </div>
                 )

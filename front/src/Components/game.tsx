@@ -1,5 +1,6 @@
 import { Drawer, makeStyles, Typography, ListItem, ListItemAvatar, Avatar, ListItemText } from '@material-ui/core'
 import React from 'react'
+import { useParams } from "react-router-dom";
 import GameEngine from '../GameEngine/gameEngine'
 import PersonIcon from '@material-ui/icons/Person';
 
@@ -22,24 +23,37 @@ const useStyles = makeStyles({
     listPlayer: {
         display: 'flex',
         flexDirection: 'column'
-    }
+    },
+    listDiv: {
+        borderRadius: 25,
+        backgroundColor: '#7FDBFF',
+        margin: 20
+    },
+    player: {
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'spaceAround',
+        marginTop: 5,
+        marginBottom: 5
+    },
+
 })
 
 const Game: React.FC = () => {
     const classes = useStyles();
     const [players, setPlayers] = React.useState<any | null>([]);
+    const { link }: { link: string } = useParams()
 
     const listePlayer = () => {
-        console.log('players ici =', players[0]);
-
+        /* const players = [{ color: "red", name: "Jordan", id: 6, status: "online" }, { color: "purple", name: "Ronan", id: 4, status: "online" }, { color: "blue", name: "Jack", id: 5, status: "online" },] */
         if (players !== null && players !== undefined) {
-            console.log('test');
             return players.map((item: any, key: number) => {
                 if (item.status === 'online') {
                     return (
-                        <div key={key}>
+                        <div key={key} className={classes.player}>
                             <ListItemAvatar>
-                                <Avatar>
+                                <Avatar style={{ backgroundColor: item.color, width: 35, height: 35 }}>
                                     <PersonIcon />
                                 </Avatar>
                             </ListItemAvatar>
@@ -56,19 +70,16 @@ const Game: React.FC = () => {
                 <div>
                     <Typography variant="h5" >My Room</Typography>
                 </div>
-                <ListItem className={classes.listPlayer}>
-                    {listePlayer()}
-                    {/*   <ListItemAvatar>
-                        <Avatar>
-                            <PersonIcon />
-                        </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText primary={'test'} /> */}
-                </ListItem>
+                <div className={classes.listDiv}>
+                    <p>PLayers</p>
+                    <ListItem className={classes.listPlayer}>
+                        {listePlayer()}
+                    </ListItem>
+                </div>
             </Drawer>
-            <div className={classes.page} >
-                <GameEngine setPlayers={(item: any) => setPlayers(item)} players={players} />
-            </div>
+            {link !== null && (<div className={classes.page} >
+                <GameEngine setPlayers={(item: any) => setPlayers(item)} link={link} />
+            </div>)}
         </div>
     )
 }

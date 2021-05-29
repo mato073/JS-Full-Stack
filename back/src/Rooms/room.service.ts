@@ -17,18 +17,25 @@ export class RoomService {
         private jwtService: JwtService
     ) { }
 
-    tada: any;
     getRooms() {
         return this.roomsRepository.find();
     }
 
     async getRoom(link: string) {
-        let { name, creator, players, board, turn } = await this.roomsRepository.findOne({ link });
-        players = JSON.parse(players);
-        creator = JSON.parse(creator);
-        board = JSON.parse(board);
-        this.tada = { name, creator, players, board }
-        return { name, creator, players, board, turn }
+        if (link === undefined || link === null) {
+            throw new NotFoundException({ room: null, status: 400 })
+        }
+        const room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            throw new NotFoundException({ room: null, status: 400 })
+        }
+        const data = {
+            players: JSON.parse(room.players),
+            creator: JSON.parse(room.creator),
+            board: JSON.parse(room.board),
+            turn: room.turn
+        }
+        return { room: data, status: 200 };
     }
 
     async savePosition(link: string, newPosition: string) {
@@ -84,6 +91,7 @@ export class RoomService {
         const id = await this.getIdFromToken(token);
         const user = await this.usersRepository.findOne({ id });
         const room = await this.roomsRepository.findOne({ link });
+
         if (!room || !user) {
             throw new NotFoundException('The link is invalid ! or no room exist')
         } else if (room.status === 'online') {
@@ -97,10 +105,10 @@ export class RoomService {
         const newUser = {
             color: colors[(Object.keys(playes).length - 1)],
             name: user.name,
-            id: user.id
+            id: user.id,
+            status: 'ofline'
         }
         playes.push(newUser);
-        console.log("number =", Object.keys(playes).length);
 
         room.players = JSON.stringify(playes);
         await this.roomsRepository.save(room);
@@ -116,7 +124,8 @@ export class RoomService {
         const newUser = {
             color: 'red',
             name: user.name,
-            id: user.id
+            id: user.id,
+            status: 'ofline'
         }
         const creator = {
             name: user.name,
@@ -129,20 +138,31 @@ export class RoomService {
             this.roomsRepository.insert(room);
             return { link: link, status: 200 };
         } catch (err) {
-            return (err);
+            throw new NotFoundException(err)
         }
     }
 
     async getUserStatus(user: { name: string, id: number }, link: string) {
-        let room = await this.roomsRepository.findOne({ link });
+        let room: Room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            return { status: 400, users: [] }
+        }
         const users = JSON.parse(room.players);
         const index = Object(users).findIndex((el: any) => el.id === user.id);
 
         if (index === -1) {
-            //add user in db
-            console.log('user not in db !');
-            return { status: 400, users: {} }
-
+            const colors = ['purple', 'blue', 'green', 'yellow', 'orange']
+            const newUser = {
+                color: colors[(Object.keys(users).length - 1)],
+                name: user.name,
+                id: user.id,
+                status: 'online'
+            }
+            users.push(newUser);
+            room.players = JSON.stringify(users);
+            this.roomsRepository.save(room);
+            console.log('User added in db');
+            return { status: 201, users: users, color: newUser.color }
         } else {
             users[index].status = 'online'
             room.players = JSON.stringify(users);
@@ -152,7 +172,10 @@ export class RoomService {
     }
 
     async playerDisconect(userId: number, link: string) {
-        let room = await this.roomsRepository.findOne({ link });
+        const room: Room = await this.roomsRepository.findOne({ link });
+        if (!room) {
+            return { status: 400, users: [] }
+        }
         const users = JSON.parse(room.players);
         const index = Object(users).findIndex((el: any) => el.id === userId);
         users[index].status = 'ofline'

@@ -13,7 +13,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Purple.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#PurpleBall" onClick={(e) => position(e, key, 'Purple')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#PurpleBall" onClick={(e) => position(e, key, 'purple')} ></use>
                 )
             })
         }
@@ -24,7 +24,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Red.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#RedBall" onClick={(e) => position(e, key, 'Red')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#RedBall" onClick={(e) => position(e, key, 'red')} ></use>
                 )
             })
         }
@@ -34,7 +34,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Orange.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#OrangeBall" onClick={(e) => position(e, key, 'Orange')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#OrangeBall" onClick={(e) => position(e, key, 'orange')} ></use>
                 )
             })
         }
@@ -44,7 +44,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Yellow.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#YellowBall" onClick={(e) => position(e, key, 'Yellow')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#YellowBall" onClick={(e) => position(e, key, 'yellow')} ></use>
                 )
             })
         }
@@ -54,7 +54,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Green.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#GreenBall" onClick={(e) => position(e, key, 'Green')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#GreenBall" onClick={(e) => position(e, key, 'green')} ></use>
                 )
             })
         }
@@ -66,7 +66,7 @@ const Board: React.FC<Props> = ({ serverPosition, changePosition, position}) => 
         if (serverPosition !== null) {
             return serverPosition.Blue.map((item: any, key: any) => {
                 return (
-                    <use transform={item.position} key={key} id={item.id} xlinkHref="#BlueBall" onClick={(e) => position(e, key, 'Blue')} ></use>
+                    <use transform={item.position} key={key} id={item.id} xlinkHref="#BlueBall" onClick={(e) => position(e, key, 'blue')} ></use>
                 )
             })
         }

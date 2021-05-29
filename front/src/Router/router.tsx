@@ -14,7 +14,7 @@ const Router: React.FC = () => {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/home" component={Home} />
-                    <Route path="/game" component={Game} />
+                    <Route path="/game/:link" component={Game} />
                 </Switch>
             </div>
 
