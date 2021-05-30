@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
     },
     title: {
         flexGrow: 1,
+        display: 'flex',
+        justifyContent: 'center'
+
     },
     content: {
         flexGrow: 1,
@@ -98,7 +101,7 @@ const Home: React.FC<Props> = (props) => {
                             fullWidth
                             variant="contained"
                             color="secondary"
-                            style={{marginBottom: 20} }
+                            style={{ marginBottom: 20 }}
                         > Join Room
                         </Button>
                         <Button
@@ -113,16 +116,16 @@ const Home: React.FC<Props> = (props) => {
                 </Box>
             </Drawer>
             <main className={classes.content}>
-                <div>
-                    <AppBar>
-                        <Toolbar>
-                            <Typography variant="h6" className={classes.title}>
-                                Rooms
-                        </Typography>
-                        </Toolbar>
-                    </AppBar>
-                </div>
                 <div className={classes.list}>
+                    <div>
+                        <AppBar>
+                            <Toolbar>
+                                <Typography variant="h6">
+                                    Rooms
+                        </Typography>
+                            </Toolbar>
+                        </AppBar>
+                    </div>
                     <ListsRooms history={history} rooms={rooms} />
                 </div>
             </main>
