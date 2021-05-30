@@ -47,7 +47,7 @@ const ModalView: React.FC<Props> = ({ open, handle, history }) => {
             const result = await joinRoom(link);
             console.log(result);
             if (result.status === 200) {
-                history.push(`/game/${result.link}`);
+                history.push(`/game/${link}`);
             }
         }
     }
